@@ -1,0 +1,6 @@
+.facebook.com
+.vk.com
+.ok.ru
+.instagram.com
+.twitter.com
+.youtu.be

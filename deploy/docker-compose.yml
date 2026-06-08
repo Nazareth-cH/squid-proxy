@@ -1,0 +1,32 @@
+services:
+  squid:
+    build:
+      context: .
+      dockerfile: docker/squid/Dockerfile
+    container_name: squid-proxy
+    restart: unless-stopped
+    ports:
+      - "${SQUID_PORT:-3128}:3128"
+    volumes:
+      - ../config/squid/squid.conf:/etc/squid/squid.conf:ro
+      - ../config/squid/blocked_domains.txt:/etc/squid/blocked_domains.txt:ro
+      - ../config/squid/passwords:/etc/squid/passwords:ro
+      - ../data/cache:/var/cache/squid
+#      - ../logs:/var/log/squid
+    env_file:
+      - ../.env
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/tmp
+      - /var/run
+    cap_add:
+      - NET_BIND_SERVICE
+    security_opt:
+      - no-new-privileges:true
