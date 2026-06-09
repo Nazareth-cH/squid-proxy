@@ -8,3 +8,4 @@ data/cache/
 *.key
 
 config/squid/passwords
+config/squid/passwords

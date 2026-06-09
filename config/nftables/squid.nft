@@ -1,0 +1,7 @@
+table inet squid_redirect {
+    chain prerouting {
+        type nat hook prerouting priority -100; policy accept;
+        tcp dport 80 redirect to :3129
+        tcp dport 443 redirect to :3129
+    }
+}
